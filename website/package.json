@@ -1,0 +1,104 @@
+{
+  "name": "blob",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "tsc --noEmit",
+    "start": "next start",
+    "test": "jest",
+    "lint": "eslint \"{lib,components,pages}/**/*.{ts,tsx}\"",
+    "prepare": "ts-dev-tools install",
+    "deploy": "next build && next export"
+  },
+  "peerDependencies": {
+    "jest": "*"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/server": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.1",
+    "@mui/material": "^5.0.1",
+    "contentful": "^9.0.0",
+    "date-fns": "^2.24.0",
+    "next": "^11.0.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-player": "^2.9.0",
+    "react-slick": "^0.28.1"
+  },
+  "devDependencies": {
+    "@ts-dev-tools/react": "^1.5.6"
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint",
+      "jest"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:jest/recommended",
+      "plugin:react/recommended",
+      "prettier"
+    ],
+    "env": {
+      "es2021": true,
+      "browser": true
+    },
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      },
+      "jest": {
+        "version": "detect"
+      }
+    },
+    "rules": {
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off"
+    }
+  },
+  "prettier": {
+    "semi": true,
+    "printWidth": 100,
+    "trailingComma": "es5"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "style": "module",
+      "parser": "typescript"
+    }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ]
+  },
+  "tsDevTools": {
+    "version": "20201111162698-init"
+  }
+}
