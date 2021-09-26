@@ -13,6 +13,8 @@ Here are the experiments performed by the classes of 5ème 1 & 5ème 2 of the Je
 
 # Stack
 
+![GitHub Logo](./diagram.jpg)
+
 ```mermaid
 sequenceDiagram
     Raspberry->>Raspberry: Turns on the LEDs
@@ -36,3 +38,5 @@ sequenceDiagram
 Contentful is a headless content management system (CMS)
 
 [See more](https://www.contentful.com/)
+
+![GitHub Logo](/images/logo.png)
