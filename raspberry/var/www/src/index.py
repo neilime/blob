@@ -41,8 +41,7 @@ def publishPicture():
     environment_id = os.getenv('CONTENTFUL_ENVIRONMENT_ID')
     client = Client(token)
 
-
-    print('Uploading picture...')
+    print('Uploading picture...', 'Space ID:' + space_id, 'Environment ID:' + environment_id)
     with open(picturePath, 'rb') as file:
         new_upload = client.uploads(space_id).create(file)
         print('Picture uploaded')
