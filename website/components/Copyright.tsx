@@ -1,6 +1,6 @@
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Grid, Typography } from "@mui/material";
-import React, { ReactElement } from "react";
+import type { ReactElement } from "react";
 
 import Link from "./Link";
 
@@ -9,19 +9,17 @@ export const Copyright = (): ReactElement => {
     <Grid
       container
       direction="row"
-      justifyContent="center"
       spacing={2}
-      alignItems="flex-end"
-      sx={{ mt: 5 }}
+      sx={{ mt: 5, justifyContent: "center", alignItems: "flex-end" }}
     >
-      <Grid item>
+      <Grid>
         <Typography variant="body2" color="text.secondary" align="center">
           {"Copyright © "}
           <Link href="/">Blob - Expérience</Link> {new Date().getFullYear()}
           {"."}
         </Typography>
       </Grid>
-      <Grid item>
+      <Grid>
         <Link href="https://github.com/neilime/blob">
           <GitHubIcon /> Ressources
         </Link>

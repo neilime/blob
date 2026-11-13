@@ -1,0 +1,7 @@
+[build]
+  base = "website"
+  command = "yarn build"
+  publish = "out"
+
+[build.environment]
+  YARN_FLAGS = "--ignore-scripts"

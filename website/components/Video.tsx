@@ -1,22 +1,25 @@
-import { Paper, Stack, styled } from "@mui/material";
-import React, { ReactElement } from "react";
+import { Stack } from "@mui/material";
+import type { ReactElement } from "react";
 import ReactPlayer from "react-player";
-
-const VideoBox = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-  borderRadius: 15,
-}));
+import { MediaPanel } from "./MediaPanel";
 
 export const Video = (): ReactElement => {
   return (
-    <VideoBox>
-      <Stack direction="column" justifyContent="center" alignItems="center" spacing={1}>
+    <MediaPanel>
+      <Stack
+        direction="column"
+        spacing={1}
+        sx={{ justifyContent: "center", alignItems: "center" }}
+      >
         <h3>Le laboratoire</h3>
-        <ReactPlayer url="/videos/blob.MOV" controls width="100%" />
+        <ReactPlayer
+          src="/videos/blob.MOV"
+          controls
+          preload="metadata"
+          style={{ width: "100%" }}
+          aria-label="Le laboratoire du Blob"
+        />
       </Stack>
-    </VideoBox>
+    </MediaPanel>
   );
 };

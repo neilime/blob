@@ -1,0 +1,42 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  application:
+    uses: hoverkraft-tech/ci-github-nodejs/.github/workflows/continuous-integration.yml@a60704c5e9902675a1b4a5141411d95733e80ff5 # 3.0.2
+    permissions:
+      contents: read
+      id-token: write
+      packages: read
+      pull-requests: write
+      security-events: write
+    with:
+      working-directory: website
+      build: '{"artifact":"out"}'
+
+  workflows:
+    uses: hoverkraft-tech/ci-github-common/.github/workflows/linter.yml@d07ee49b460ae2f3815804b5153fe918092aa321 # 4.2.0
+    permissions:
+      actions: read
+      contents: read
+      issues: write
+      packages: read
+      pull-requests: write
+      security-events: write
+      statuses: write
+    with:
+      # This workflow validates the website; Raspberry hardware has a separate runtime.
+      linter-env: |
+        FILTER_REGEX_EXCLUDE=(^|/)raspberry/
