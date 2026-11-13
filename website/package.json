@@ -4,101 +4,59 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "tsc --noEmit",
-    "start": "next start",
-    "test": "jest",
-    "lint": "eslint \"{lib,components,pages}/**/*.{ts,tsx}\"",
+    "build": "next build",
+    "test": "vitest run",
+    "test:ci": "vitest run --coverage --reporter=default --reporter=junit --outputFile=junit.xml",
+    "lint": "biome check . && tsc --noEmit",
+    "lint:ci": "biome ci . && tsc --noEmit",
+    "format": "biome format --write .",
+    "test:watch": "vitest",
+    "test:cov": "vitest run --coverage",
     "prepare": "ts-dev-tools install",
-    "deploy": "next build && next export"
-  },
-  "peerDependencies": {
-    "jest": "*"
+    "check": "biome check --error-on-warnings --write .",
+    "vitest": "vitest"
   },
   "dependencies": {
-    "@emotion/react": "^11.4.1",
-    "@emotion/server": "^11.4.0",
-    "@emotion/styled": "^11.3.0",
-    "@mui/icons-material": "^5.0.1",
-    "@mui/material": "^5.0.1",
-    "contentful": "^9.0.0",
-    "date-fns": "^2.24.0",
-    "next": "^11.0.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-player": "^2.9.0",
-    "react-slick": "^0.28.1"
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/server": "^11.11.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.5.0",
+    "@mui/material": "^9.5.0",
+    "@mui/material-nextjs": "^9.5.0",
+    "contentful": "^11.12.10",
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-player": "^3.4.0"
   },
   "devDependencies": {
-    "@ts-dev-tools/react": "^1.5.6"
+    "@ts-dev-tools/react": "^1.12.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
   },
-  "eslintConfig": {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-      "@typescript-eslint",
-      "jest"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:jest/recommended",
-      "plugin:react/recommended",
-      "prettier"
-    ],
-    "env": {
-      "es2021": true,
-      "browser": true
-    },
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 12,
-      "sourceType": "module"
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      },
-      "jest": {
-        "version": "detect"
-      }
-    },
-    "rules": {
-      "react/jsx-uses-react": "off",
-      "react/react-in-jsx-scope": "off"
-    }
+  "packageManager": "yarn@1.22.22",
+  "engines": {
+    "node": ">=26.13.0"
   },
-  "prettier": {
-    "semi": true,
-    "printWidth": 100,
-    "trailingComma": "es5"
+  "resolutions": {
+    "@types/react": "^19.3.0"
   },
+  "type": "module",
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
-    ]
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint --fix"
-    ]
-  },
-  "importSort": {
-    ".js, .jsx, .ts, .tsx": {
-      "style": "module",
-      "parser": "typescript"
+    ],
+    "rules": {
+      "body-max-line-length": [
+        0
+      ],
+      "footer-max-line-length": [
+        0
+      ]
     }
   },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "jsdom",
-    "testMatch": [
-      "**/__tests__/**/*.[jt]s?(x)",
-      "**/?(*.)+(spec|test).+(ts|tsx|js)"
-    ]
-  },
   "tsDevTools": {
-    "version": "20201111162698-init"
+    "version": "20260604100001-migrate-to-vitest"
   }
 }

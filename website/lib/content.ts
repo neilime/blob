@@ -1,34 +1,26 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const contentful = require("contentful");
-
-import { Frame } from "./Frame";
-
-function getClient() {
-  const space = process.env.CONTENTFUL_SPACE;
-  const environment = process.env.CONTENTFUL_ENVIRONMENT;
-  const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
-
-  const client = contentful.createClient({
-    space,
-    environment,
-    accessToken,
-  });
-  return client;
-}
+import { createClient } from "contentful";
+import type { Frame } from "./Frame";
 
 export async function getLastFrame(): Promise<Frame | null> {
-  const entries = await getClient().getAssets({
-    order: "-sys.createdAt",
+  const space = process.env.CONTENTFUL_SPACE;
+  const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
+  if (!space || !accessToken) return null;
+
+  const client = createClient({
+    space,
+    environment: process.env.CONTENTFUL_ENVIRONMENT || "master",
+    accessToken,
+  });
+  const entries = await client.getAssets({
+    order: ["-sys.createdAt"],
     limit: 1,
   });
-
-  const data = entries?.items[0];
-  if (!data) {
-    return null;
-  }
+  const data = entries.items[0];
+  const url = data?.fields.file?.url;
+  if (!data || !url) return null;
 
   return {
     createdAt: data.sys.createdAt,
-    src: "https://" + data.fields.file.url,
-  } as Frame;
+    src: new URL(url, "https://images.ctfassets.net").href,
+  };
 }

@@ -1,42 +1,39 @@
-import { Paper, Skeleton, styled } from "@mui/material";
-import React, { ReactElement, useEffect, useState } from "react";
-
+import { Skeleton, styled } from "@mui/material";
+import { type ReactElement, useEffect, useState } from "react";
 import { getLastFrame } from "../lib/content";
-import { Frame } from "../lib/Frame";
-
-const FrameBox = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-  borderRadius: 15,
-}));
+import type { Frame } from "../lib/Frame";
+import { MediaPanel } from "./MediaPanel";
 
 const FrameImage = styled("img")(({ theme }) => ({
   borderColor: theme.palette.text.secondary,
 }));
 
-const REFRESH_INTERVALL = 1000 * 60 * 5; // 5 minutes
+const REFRESH_INTERVAL = 1000 * 60 * 5; // 5 minutes
 
 export const LastFrame = (): ReactElement => {
-  const [lastFrame, setLastFrame] = useState<Frame>();
+  const [lastFrame, setLastFrame] = useState<Frame | null>(null);
   useEffect(() => {
-    const interval = setInterval(() => {
-      getLastFrame().then((data) => {
-        setLastFrame(data);
-      });
-    }, REFRESH_INTERVALL);
-
-    getLastFrame().then((data) => {
-      setLastFrame(data);
-    });
-    return () => clearInterval(interval);
+    let active = true;
+    const refresh = async () => {
+      try {
+        const frame = await getLastFrame();
+        if (active) setLastFrame(frame);
+      } catch {
+        // Keep the previous frame when the remote service is unavailable.
+      }
+    };
+    void refresh();
+    const interval = setInterval(refresh, REFRESH_INTERVAL);
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
   }, []);
 
-  const shouldDisplayFrame = Boolean(lastFrame);
-
   return (
-    <FrameBox>{shouldDisplayFrame ? <FramePaper frame={lastFrame} /> : <FrameSkeleton />}</FrameBox>
+    <MediaPanel>
+      {lastFrame ? <FramePaper frame={lastFrame} /> : <FrameSkeleton />}
+    </MediaPanel>
   );
 };
 

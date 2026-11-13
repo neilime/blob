@@ -1,0 +1,11 @@
+website/node_modules/
+website/.next/
+website/out/
+website/coverage/
+website/junit.xml
+website/*.tsbuildinfo
+website/.env.local
+website/.env.*.local
+__pycache__/
+*.pyc
+website/.vitest/
